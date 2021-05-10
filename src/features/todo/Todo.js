@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import {addTodoAsync, deleteTodoAsync, readTodoAsync} from "./todoSlice";
+import {addTodoAsync, deleteTodoAsync, editTodoAsync, readTodoAsync, setEditingData} from "./todoSlice";
 import {useDispatch, useSelector} from "react-redux";
-import {FaTrashAlt} from 'react-icons/fa';
+import {FaEdit, FaTrashAlt} from 'react-icons/fa';
 
 export function Todo() {
   const dispatch = useDispatch();
@@ -22,7 +22,6 @@ export function Todo() {
 
 function ListTodo() {
   const todos = useSelector(state => {
-    console.log("ListTodo", state.todo.todoList);
     return state.todo.todoList
   });
   const dispatch = useDispatch();
@@ -35,6 +34,14 @@ function ListTodo() {
             <FaTrashAlt style={{position: "absolute", right: "25", cursor: "pointer"}} onClick={() => {
               dispatch(deleteTodoAsync(todos.length - index - 1));
             }}/>
+            <FaEdit style={{position: "absolute", right: "25", bottom: 25, cursor: "pointer"}} onClick={() => {
+              dispatch(setEditingData({
+                isEditing: true,
+                editingId: todos.length - index - 1,
+                todo: todo.todo,
+                description: todo.description,
+              }));
+            }}/>
             <h5>{todo.todo}</h5>
             <span>{todo.description}</span>
           </div>
@@ -45,10 +52,45 @@ function ListTodo() {
 }
 
 function AddTodo() {
-  const [todo, setTodo] = useState("");
-  const [description, setDescription] = useState("");
   const [valid, setValid] = useState(true);
   const dispatch = useDispatch();
+  const editingData = useSelector(state => {
+    return state.todo.editingData;
+  });
+
+  function add() {
+    if (editingData.todo && editingData.description) {
+      dispatch(addTodoAsync({
+        todo: editingData.todo,
+        description: editingData.description
+      }));
+      dispatch(setEditingData({
+        isEditing: false,
+        editingId: null,
+        todo: "",
+        description: "",
+      }))
+    } else {
+      setValid(false);
+    }
+  }
+
+  function edit() {
+    console.log(editingData);
+    dispatch(editTodoAsync({
+      index: editingData.editingId,
+      data: {
+        todo: editingData.todo,
+        description: editingData.description
+      }
+    }));
+    dispatch(setEditingData({
+      isEditing: false,
+      editingId: null,
+      todo: "",
+      description: "",
+    }))
+  }
 
   return (
     <div className="d-inline-block">
@@ -60,9 +102,14 @@ function AddTodo() {
               {"Todo"}
             </th>
             <td>
-              <input value={todo} onChange={(e) => {
-                setTodo(e.target.value);
-                if (todo) {
+              <input value={editingData.todo} onChange={(e) => {
+                dispatch(setEditingData({
+                  editingId: editingData.editingId,
+                  isEditing: editingData.isEditing,
+                  todo: e.target.value,
+                  description: editingData.description
+                }));
+                if (editingData.todo && editingData.description) {
                   setValid(true);
                 }
               }}/>
@@ -73,9 +120,14 @@ function AddTodo() {
               Description
             </th>
             <td>
-              <input value={description} onChange={(e) => {
-                setDescription(e.target.value)
-                if (description) {
+              <input value={editingData.description} onChange={(e) => {
+                dispatch(setEditingData({
+                  editingId: editingData.editingId,
+                  isEditing: editingData.isEditing,
+                  todo: editingData.todo,
+                  description: e.target.value
+                }));
+                if (editingData.todo && editingData.description) {
                   setValid(true);
                 }
               }}/>
@@ -88,17 +140,12 @@ function AddTodo() {
         {!valid ? <span className="text-danger">The field must not empty</span> : <div/>}
       </div>
       <button className="btn btn-primary mt-3" onClick={() => {
-        if (todo && description) {
-          dispatch(addTodoAsync({
-            todo: todo,
-            description: description
-          }));
-          setDescription("");
-          setTodo("");
+        if (editingData.isEditing) {
+          edit()
         } else {
-          setValid(false);
+          add()
         }
-      }}>Add todo
+      }}>{editingData.isEditing ? "Edit" : "Add todo"}
       </button>
     </div>
   )

@@ -1,4 +1,24 @@
 // A mock function to mimic making an async request for data
+function editTodo(index, data) {
+  return new Promise((resolve) =>
+    setTimeout(() => {
+      let todoList = localStorage.getItem("todoList");
+      if (todoList) {
+        todoList = JSON.parse(todoList);
+      } else {
+        todoList = [];
+      }
+      console.log("Edit todo: ", todoList, index);
+      if (todoList.length > index) {
+        todoList[index] = data
+      }
+      console.log(todoList)
+      localStorage.setItem('todoList', JSON.stringify(todoList));
+      resolve(todoList)
+    }, 1)
+  );
+}
+
 function readTodo() {
   return new Promise((resolve) =>
     setTimeout(() => {
@@ -48,4 +68,4 @@ function deleteTodo(index) {
   );
 }
 
-export default {createTodo, readTodo, deleteTodo}
+export default {createTodo, readTodo, deleteTodo, editTodo}

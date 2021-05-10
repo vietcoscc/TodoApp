@@ -23,6 +23,17 @@ export const addTodoAsync = createAsyncThunk(
   }
 );
 
+export const editTodoAsync = createAsyncThunk(
+  'todo/editTodo',
+  async (data) => {
+    console.log("editTodoAsync", data)
+    const response = await API.editTodo(data.index, data.data);
+    // The value we return becomes the `fulfilled` action payload
+    console.log("response", response);
+    return response;
+  }
+);
+
 export const deleteTodoAsync = createAsyncThunk(
   'todo/deleteTodo',
   async (index) => {
@@ -38,11 +49,18 @@ export const todoSlice = createSlice({
   name: "todo",
   initialState: {
     todoList: [],
+    editingData: {
+      isEditing: false,
+      editingId: null,
+      todo: "",
+      description: ""
+    },
   },
   reducers: {
-    // functionName: (state, action) => {
-    //
-    // }
+    setEditingData: (state, action) => {
+      console.log("setEditingData", action);
+      state.editingData = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -68,8 +86,16 @@ export const todoSlice = createSlice({
         console.log(action);
         state.todoList = action.payload;
       })
+      .addCase(editTodoAsync.pending, (state) => {
+        console.log("editTodoAsync pending");
+      })
+      .addCase(editTodoAsync.fulfilled, (state, action) => {
+        console.log("editTodoAsync fulfilled");
+        console.log(action);
+        state.todoList = action.payload;
+      })
     ;
   },
 });
-export const {addTodo, deleteTodo, editTodo} = todoSlice.actions;
+export const {setEditingData} = todoSlice.actions;
 export default todoSlice.reducer
