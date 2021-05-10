@@ -3,8 +3,8 @@ import API from "./todoAPI"
 
 export const readTodoAsync = createAsyncThunk(
   'todo/readTodo',
-  async (index) => {
-    console.log("readTodoAsync", index);
+  async (data) => {
+    console.log("readTodoAsync");
     const response = await API.readTodo();
     // The value we return becomes the `fulfilled` action payload
     console.log("response", response);

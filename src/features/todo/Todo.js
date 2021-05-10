@@ -102,7 +102,7 @@ function AddTodo() {
               {"Todo"}
             </th>
             <td>
-              <input value={editingData.todo} onChange={(e) => {
+              <input placeholder="Todo" value={editingData.todo} onChange={(e) => {
                 dispatch(setEditingData({
                   editingId: editingData.editingId,
                   isEditing: editingData.isEditing,
@@ -120,7 +120,7 @@ function AddTodo() {
               Description
             </th>
             <td>
-              <input value={editingData.description} onChange={(e) => {
+              <input placeholder="Description" value={editingData.description} onChange={(e) => {
                 dispatch(setEditingData({
                   editingId: editingData.editingId,
                   isEditing: editingData.isEditing,
