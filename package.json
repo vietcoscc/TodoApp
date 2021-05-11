@@ -2,7 +2,23 @@
   "name": "todo-app",
   "version": "0.1.0",
   "private": true,
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      "node_modules",
+      "test-config",
+      "interfaces",
+      "jestGlobalMocks.ts",
+      ".module.ts",
+      "<rootDir>/src/index.js",
+      "<rootDir>/src/reportWebVitals.js",
+      "<rootDir>/src/setupTests.js",
+      "<rootDir>/src/serviceWorker.js",
+      "<rootDir>/src/index.js",
+      ".mock.ts"
+    ]
+  },
   "dependencies": {
+    "@craco/craco": "^6.1.2",
     "@reduxjs/toolkit": "^1.5.1",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
@@ -15,10 +31,10 @@
     "react-scripts": "4.0.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --coverage --watchAll=false --silent",
-    "eject": "react-scripts eject"
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test --coverage",
+    "eject": "craco eject"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -35,19 +51,7 @@
       "last 1 safari version"
     ]
   },
-  "jest": {
-    "coveragePathIgnorePatterns": [
-      "node_modules",
-      "test-config",
-      "interfaces",
-      "jestGlobalMocks.ts",
-      ".module.ts",
-      "<rootDir>/src/index.js",
-      "<rootDir>/src/reportWebVitals.js",
-      "<rootDir>/src/setupTests.js",
-      "<rootDir>/src/serviceWorker.js",
-      "<rootDir>/src/index.js",
-      ".mock.ts"
-    ]
+  "devDependencies": {
+    "jest-html-reporters": "^2.1.6"
   }
 }

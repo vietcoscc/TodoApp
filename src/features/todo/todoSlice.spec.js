@@ -1,12 +1,12 @@
 // import todoReducer,{addTodoAsync,editTodoAsync,readTodoAsync,deleteTodoAsync} from "./todoSlice";
 
-describe('counter reducer', () => {
+describe('todo reducer', () => {
   const initialState = {
     value: 3,
     status: 'idle',
   };
-  it('should handle increment', () => {
-    // const actual = counterReducer(initialState, increment());
+  it('readTodo', () => {
+    // const actual = todoReducer(initialState, readTodo());
     // expect(actual.value).toEqual(4);
   });
 });
