@@ -22,7 +22,11 @@ export function Todo() {
 
 function ListTodo() {
   const todos = useSelector(state => {
-    return state.todo.todoList
+    if (state.todo.todoList) {
+      return state.todo.todoList
+    } else {
+      return [];
+    }
   });
   const dispatch = useDispatch();
   return (
@@ -31,10 +35,19 @@ function ListTodo() {
       {[...todos].reverse().map((todo, index) => {
         return (
           <div className="card text-start mt-3 p-3" key={index}>
-            <FaTrashAlt style={{position: "absolute", right: "25", cursor: "pointer"}} onClick={() => {
+            <FaTrashAlt data-testid="btn-delete" data style={{
+              position: "absolute",
+              right: "25",
+              cursor: "pointer"
+            }} onClick={() => {
               dispatch(deleteTodoAsync(todos.length - index - 1));
             }}/>
-            <FaEdit style={{position: "absolute", right: "25", bottom: 25, cursor: "pointer"}} onClick={() => {
+            <FaEdit data-testid="btn-edit" style={{
+              position: "absolute",
+              right: "25",
+              bottom: 25,
+              cursor: "pointer"
+            }} onClick={() => {
               dispatch(setEditingData({
                 isEditing: true,
                 editingId: todos.length - index - 1,
@@ -76,7 +89,6 @@ function AddTodo() {
   }
 
   function edit() {
-    console.log(editingData);
     dispatch(editTodoAsync({
       index: editingData.editingId,
       data: {

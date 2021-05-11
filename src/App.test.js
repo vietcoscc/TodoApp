@@ -27,9 +27,6 @@ describe('Init test', () => {
 });
 
 describe('', () => {
-  test('Add todo', () => {
-
-  });
   test('Add todo invalid', () => {
     const {getByPlaceholderText, getByText} = render(
       <Provider store={store}>
@@ -80,5 +77,23 @@ describe('', () => {
         expect(item).toBeInTheDocument()
       })
     }, {timeout: 3000}))
+  });
+  test('Delete todo', async () => {
+    localStorage.setItem("todoList", JSON.stringify([{todo: "todo", description: "description"}]));
+    const {queryByTestId} = render(
+      <Provider store={store}>
+        <App/>
+      </Provider>
+    );
+    await waitFor(async () => {
+      expect(queryByTestId("btn-delete")).toBeInTheDocument();
+      console.log(localStorage.getItem("todoList"))
+    }, {timeout: 3000});
+    const btnDelete = queryByTestId("btn-delete");
+    console.log(localStorage.getItem("todoList"));
+    fireEvent.click(btnDelete);
+    await waitFor(async () => {
+      expect(queryByTestId("btn-delete")).not.toBeInTheDocument();
+    }, {timeout: 3000});
   })
 });

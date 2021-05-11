@@ -1,5 +1,5 @@
 // A mock function to mimic making an async request for data
-function editTodo(index, data) {
+export function editTodo(index, data) {
   return new Promise((resolve) =>
     setTimeout(() => {
       let todoList = localStorage.getItem("todoList");
@@ -8,18 +8,16 @@ function editTodo(index, data) {
       } else {
         todoList = [];
       }
-      console.log("Edit todo: ", todoList, index);
       if (todoList.length > index) {
         todoList[index] = data
       }
-      console.log(todoList)
       localStorage.setItem('todoList', JSON.stringify(todoList));
       resolve(todoList)
     }, 1)
   );
 }
 
-function readTodo() {
+export function readTodo() {
   return new Promise((resolve) =>
     setTimeout(() => {
       let todoList = localStorage.getItem("todoList");
@@ -33,7 +31,7 @@ function readTodo() {
   );
 }
 
-function createTodo(data) {
+export function createTodo(data) {
   return new Promise((resolve) =>
     setTimeout(() => {
       let todoList = localStorage.getItem("todoList");
@@ -44,23 +42,21 @@ function createTodo(data) {
       }
       todoList.push(data);
       localStorage.setItem('todoList', JSON.stringify(todoList));
-      console.log("createTodo", todoList);
       resolve(todoList)
     }, 1)
   );
 }
 
-function deleteTodo(index) {
-  console.log("deleteTodo:     --- ", index);
+export function deleteTodo(index) {
   return new Promise((resolve) =>
     setTimeout(() => {
       let todoList = localStorage.getItem("todoList");
 
       if (todoList && todoList.length > 0) {
         todoList = JSON.parse(todoList);
-        console.log(todoList);
         todoList.splice(index, 1);
-        console.log(todoList)
+      } else {
+        todoList = [];
       }
       localStorage.setItem('todoList', JSON.stringify(todoList));
       resolve(todoList)
