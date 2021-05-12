@@ -69,6 +69,7 @@ export const todoSlice = createSlice({
       })
       .addCase(readTodoAsync.fulfilled, (state, action) => {
         console.log("readTodoAsync fulfilled");
+        console.log(action.payload);
         state.todoList = action.payload;
       })
       .addCase(addTodoAsync.pending, (state) => {

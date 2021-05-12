@@ -33,7 +33,7 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
-    "test": "craco test --coverage",
+    "test": "craco test --coverage --watchAll=false",
     "eject": "craco eject"
   },
   "eslintConfig": {

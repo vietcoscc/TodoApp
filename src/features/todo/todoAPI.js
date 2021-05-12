@@ -26,6 +26,7 @@ export function readTodo() {
       } else {
         todoList = [];
       }
+      console.log("readTodo", todoList);
       resolve(todoList)
     }, 1)
   );
