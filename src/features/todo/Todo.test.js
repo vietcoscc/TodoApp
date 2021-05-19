@@ -8,7 +8,6 @@ import API from "./todoAPI";
 
 configure({adapter: new Adapter()});
 jest.mock("./todoAPI");
-
 it('Read list todo', done => {
   //Mock value
   const value = [{todo: "todo", description: "description"}];
@@ -17,6 +16,8 @@ it('Read list todo', done => {
   API.readTodo = jest.fn().mockImplementation(() => promise);
   //Render component
   const wrapper = mount(<Provider store={store}><Todo/></Provider>);
+  //Check no data on init
+  expect(wrapper.find('ListTodo').first().text()).toBe("(No data)");
   //Check API call
   expect(API.readTodo).toHaveBeenCalledTimes(1);
   //Wait for all process finish
