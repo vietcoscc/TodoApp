@@ -24,8 +24,8 @@
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.8.3",
     "bootstrap": "^5.0.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "react-icons": "^4.2.0",
     "react-redux": "^7.2.4",
     "react-scripts": "4.0.3"
@@ -52,6 +52,8 @@
     ]
   },
   "devDependencies": {
-    "jest-html-reporters": "^2.1.6"
+    "jest-html-reporters": "^2.1.6",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6"
   }
 }

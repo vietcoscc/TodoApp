@@ -35,7 +35,7 @@ function ListTodo() {
       {[...todos].reverse().map((todo, index) => {
         return (
           <div className="card text-start mt-3 p-3" key={index}>
-            <FaTrashAlt data-testid="btn-delete" data style={{
+            <FaTrashAlt data-testid="btn-delete" style={{
               position: "absolute",
               right: "25",
               cursor: "pointer"
